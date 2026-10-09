@@ -1,6 +1,6 @@
 # ROLLING BALL
 
-**Unity6.3LTS 项目(6000.3.10f1)**
+**Unity2023 项目(2023.2.20f1)**
 
 所有美术资源存放在`Assets\Resources\ArtAssets`下
 
