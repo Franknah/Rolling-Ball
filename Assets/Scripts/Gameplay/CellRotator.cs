@@ -10,14 +10,16 @@ namespace RollingBall
     /// </summary>
     public class CellRotator : MonoBehaviour
     {
+        [Header("场景引用（在 Inspector 中拖入）")]
         public LevelBuilder level;
         public BallController ball;
         public Camera cam;
         public GameManager game;
 
-        private void Awake()
+        private void Start()
         {
-            if (cam == null) cam = Camera.main;
+            if (level == null || ball == null || cam == null || game == null)
+                Debug.LogError("[RollingBall] CellRotator 缺少引用：请在 Inspector 中把 Level / Ball / Camera / Game 依次拖入。", this);
         }
 
         private void Update()

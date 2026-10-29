@@ -301,6 +301,8 @@ namespace RollingBall.EditorTools
             manager.ball = ball;
             manager.hud = hud;
 
+            if (ball != null) ball.level = builder;
+
             rotator.level = builder;
             rotator.ball = ball;
             rotator.game = manager;

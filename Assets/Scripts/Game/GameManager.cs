@@ -17,6 +17,7 @@ namespace RollingBall
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        [Header("场景引用（在 Inspector 中拖入）")]
         public LevelBuilder level;
         public BallController ball;
         public GameHUD hud;
@@ -28,21 +29,16 @@ namespace RollingBall
 
         private void Start()
         {
-            if (level == null)
-                level = FindFirstObjectByType<LevelBuilder>();
-            if (ball == null)
-                ball = FindFirstObjectByType<BallController>();
-            if (hud == null)
-                hud = FindFirstObjectByType<GameHUD>();
-
-            if (ball != null)
+            if (level == null || ball == null || hud == null)
             {
-                ball.Bind(level);
-                ball.DeadEnd += OnDeadEnd;
-                ball.ReachedGoal += OnGoal;
+                Debug.LogError("[RollingBall] GameManager 缺少引用：请在 Inspector 中把 Level / Ball / HUD 分别拖到对应字段。", this);
+                enabled = false;
+                return;
             }
-            if (hud != null)
-                hud.Bind(this);
+
+            ball.DeadEnd += OnDeadEnd;
+            ball.ReachedGoal += OnGoal;
+            hud.Bind(this);
 
             PrepareRun();
         }
