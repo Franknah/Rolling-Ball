@@ -8,7 +8,7 @@ namespace RollingBall.EditorTools
     /// <summary>Generates the placeholder sprites from signed-distance math. Runs only in the editor.</summary>
     public static class PlaceholderArt
     {
-        public const string Dir = "Assets/Art/Generated";
+        public const string Dir = "Assets/Resources/ArtAssets/Generated";
         private const int Size = 64;
         private const float Half = Size * 0.5f;
 
