@@ -33,7 +33,8 @@ namespace RollingBall
         /// <summary>球当前所在（或最后所在）的格子，旋转交互会用它判断“不能转球脚下的格子”。</summary>
         public PipeCell CurrentCell { get; private set; }
 
-        private LevelBuilder level;
+        [Header("场景引用（在 Inspector 中拖入）")]
+        public LevelBuilder level;
 
         private Vector2Int inDir; // 进入当前格时的运动方向
         private Vector2Int outDir; // 当前格的离开方向
@@ -46,21 +47,17 @@ namespace RollingBall
         private float elapsed; // 本次出发累计时间
         private bool moving;
 
-        public void Bind(LevelBuilder builder)
-        {
-            level = builder;
-            if (level != null && level.level != null)
-                maxTravelTime = level.level.maxTravelTime;
-        }
-
         /// <summary>从起点格中心出发，沿它唯一的开口方向开始滚动。</summary>
         public void Begin(PipeCell startCell, float speed)
         {
             if (startCell == null || level == null)
             {
+                Debug.LogError("[RollingBall] BallController 缺少 Level 引用：请在 Inspector 中把 Level 对象拖到 Ball 的 Level 字段。", this);
                 Stop();
                 return;
             }
+
+            if (level.level != null) maxTravelTime = level.level.maxTravelTime;
 
             CurrentCell = startCell;
             Speed = speed > 0f ? speed : defaultSpeed;

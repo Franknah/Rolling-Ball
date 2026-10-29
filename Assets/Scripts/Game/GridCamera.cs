@@ -9,7 +9,9 @@ namespace RollingBall
     [RequireComponent(typeof(Camera))]
     public class GridCamera : MonoBehaviour
     {
+        [Header("场景引用（在 Inspector 中拖入）")]
         public LevelBuilder level;
+
         /// <summary>四周留白（世界单位）。</summary>
         public float padding = 0.8f;
         public Color backgroundColor = new Color(0.12f, 0.14f, 0.18f, 1f);
@@ -18,13 +20,16 @@ namespace RollingBall
 
         public void Fit()
         {
-            if (level == null) level = FindObjectOfType<LevelBuilder>();
-
             var cam = GetComponent<Camera>();
             cam.orthographic = true;
             cam.backgroundColor = backgroundColor;
 
-            if (level == null || level.Size == Vector2Int.zero) return;
+            if (level == null)
+            {
+                Debug.LogError("[RollingBall] GridCamera 缺少 Level 引用：请在 Inspector 中把 Level 对象拖到 Main Camera 的 Level 字段。", this);
+                return;
+            }
+            if (level.Size == Vector2Int.zero) return;
 
             float width = level.Size.x * level.CellSize;
             float height = level.Size.y * level.CellSize;
